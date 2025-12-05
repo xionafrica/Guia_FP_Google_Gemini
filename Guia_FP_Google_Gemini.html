@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía FP: Google Workspace + Gemini</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .slide-in { animation: slideIn 0.3s ease-out forwards; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .check-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-school"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight text-blue-900">Guía FP Digital</h1>
+                        <p class="text-xs text-slate-500">Workspace + Gemini Gratis</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button onclick="window.print()" class="text-slate-500 hover:text-blue-600 transition p-2" title="Imprimir o Guardar PDF">
+                        <i class="fa-solid fa-print fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Intro Card -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white mb-8 shadow-lg slide-in">
+            <h2 class="text-2xl font-bold mb-2">Transforma tu Centro de FP</h2>
+            <p class="mb-4 opacity-90">
+                Obtén <strong>Google Workspace for Education Fundamentals</strong> de forma gratuita e ilimitada. 
+                Incluye <strong>Gemini (IA avanzada)</strong> para potenciar la enseñanza sin costes.
+            </p>
+            <div class="flex flex-wrap gap-2 text-sm font-semibold text-blue-900">
+                <span class="bg-white px-3 py-1 rounded-full"><i class="fa-solid fa-check mr-1"></i> Gratis Ilimitado</span>
+                <span class="bg-white px-3 py-1 rounded-full"><i class="fa-solid fa-robot mr-1"></i> Gemini 2.5 Pro</span>
+                <span class="bg-white px-3 py-1 rounded-full"><i class="fa-solid fa-shield mr-1"></i> Datos Seguros</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex space-x-1 bg-slate-200 p-1 rounded-xl mb-6 overflow-x-auto">
+            <button onclick="switchTab('requisitos')" id="tab-requisitos" class="tab-btn w-full py-2.5 text-sm font-medium leading-5 rounded-lg text-blue-700 bg-white shadow">
+                1. Requisitos
+            </button>
+            <button onclick="switchTab('pasos')" id="tab-pasos" class="tab-btn w-full py-2.5 text-sm font-medium leading-5 rounded-lg text-slate-600 hover:bg-white/50 hover:text-slate-800">
+                2. Paso a Paso
+            </button>
+            <button onclick="switchTab('gemini')" id="tab-gemini" class="tab-btn w-full py-2.5 text-sm font-medium leading-5 rounded-lg text-slate-600 hover:bg-white/50 hover:text-slate-800">
+                3. Uso de Gemini
+            </button>
+        </div>
+
+        <!-- CONTENT SECTIONS -->
+
+        <!-- SECTION 1: REQUISITOS -->
+        <div id="content-requisitos" class="content-section slide-in">
+            <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center">
+                    <i class="fa-solid fa-clipboard-check text-blue-500 mr-2"></i> Verifica antes de empezar
+                </h3>
+                <p class="text-slate-600 mb-6 text-sm">Marca las casillas para asegurarte de que tienes todo listo. El proceso toma unos 10-15 minutos si tienes esto a mano.</p>
+                
+                <div class="space-y-4">
+                    <label class="flex items-start p-4 border rounded-lg cursor-pointer hover:bg-blue-50 transition border-slate-200 check-container">
+                        <input type="checkbox" class="h-5 w-5 text-blue-600 mt-0.5 rounded focus:ring-blue-500 border-gray-300" onchange="updateProgress()">
+                        <div class="ml-3">
+                            <span class="block text-sm font-medium text-slate-900">Centro Acreditado</span>
+                            <span class="block text-sm text-slate-500">El centro debe emitir títulos homologados por la Administración pública española.</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-start p-4 border rounded-lg cursor-pointer hover:bg-blue-50 transition border-slate-200 check-container">
+                        <input type="checkbox" class="h-5 w-5 text-blue-600 mt-0.5 rounded focus:ring-blue-500 border-gray-300" onchange="updateProgress()">
+                        <div class="ml-3">
+                            <span class="block text-sm font-medium text-slate-900">Dominio Propio Activo</span>
+                            <span class="block text-sm text-slate-500">Ejemplo: <code>centrofp.edu.es</code>. No sirve un Gmail personal (@gmail.com).</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-start p-4 border rounded-lg cursor-pointer hover:bg-blue-50 transition border-slate-200 check-container">
+                        <input type="checkbox" class="h-5 w-5 text-blue-600 mt-0.5 rounded focus:ring-blue-500 border-gray-300" onchange="updateProgress()">
+                        <div class="ml-3">
+                            <span class="block text-sm font-medium text-slate-900">Documentación Escaneada</span>
+                            <span class="block text-sm text-slate-500">Acreditación oficial + Datos del administrador (Nombre, DNI, Teléfono, Email no-Google).</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 text-sm rounded-r-lg">
+                <strong>Consejo Regional:</strong> Si estás en Madrid, revisa si puedes usar portales autonómicos (ej. Google Workspace Madrid) para agilizar el trámite.
+            </div>
+        </div>
+
+        <!-- SECTION 2: PASOS -->
+        <div id="content-pasos" class="content-section hidden">
+            <div class="space-y-4">
+                
+                <!-- Step 1 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button onclick="toggleStep('step1')" class="w-full text-left p-5 focus:outline-none flex justify-between items-center bg-slate-50 hover:bg-white transition">
+                        <span class="font-bold text-slate-800 flex items-center">
+                            <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">1</span>
+                            Accede al Formulario
+                        </span>
+                        <i id="icon-step1" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="step1" class="hidden p-5 border-t border-slate-100">
+                        <p class="text-sm text-slate-600 mb-3">Ve a la página oficial de educación y comienza el proceso gratuito.</p>
+                        <a href="https://edu.google.com/workspace-for-education/editions/education-fundamentals/" target="_blank" class="inline-flex items-center text-blue-600 font-semibold hover:underline mb-2">
+                            Ir a edu.google.com <i class="fa-solid fa-external-link-alt ml-2 text-xs"></i>
+                        </a>
+                        <p class="text-sm text-slate-600">Haz clic en <strong>"Empezar gratis"</strong> y rellena los datos básicos (nombre, dirección, web).</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button onclick="toggleStep('step2')" class="w-full text-left p-5 focus:outline-none flex justify-between items-center bg-slate-50 hover:bg-white transition">
+                        <span class="font-bold text-slate-800 flex items-center">
+                            <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">2</span>
+                            Cuenta de Administrador
+                        </span>
+                        <i id="icon-step2" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="step2" class="hidden p-5 border-t border-slate-100">
+                        <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
+                            <li>Usa un <strong>email actual que NO sea de Google</strong> como solicitante inicial.</li>
+                            <li>Acepta los términos y el consentimiento de datos educativos.</li>
+                            <li>Recibirás un código de verificación en ese email.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button onclick="toggleStep('step3')" class="w-full text-left p-5 focus:outline-none flex justify-between items-center bg-slate-50 hover:bg-white transition">
+                        <span class="font-bold text-slate-800 flex items-center">
+                            <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">3</span>
+                            Verificar Dominio (Crucial)
+                        </span>
+                        <i id="icon-step3" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="step3" class="hidden p-5 border-t border-slate-100">
+                        <p class="text-sm text-slate-600 mb-3">Entra en <a href="https://admin.google.com" target="_blank" class="text-blue-600 underline">admin.google.com</a>.</p>
+                        <div class="bg-gray-50 p-3 rounded border border-gray-200 text-sm font-mono text-gray-700 mb-2">
+                            Método TXT o CNAME
+                        </div>
+                        <p class="text-sm text-slate-600">Sigue las instrucciones en pantalla para añadir el registro TXT en tu proveedor de hosting (GoDaddy, Ionos, Arsys, etc.). Google lo detecta en unos 5 minutos.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button onclick="toggleStep('step4')" class="w-full text-left p-5 focus:outline-none flex justify-between items-center bg-slate-50 hover:bg-white transition">
+                        <span class="font-bold text-slate-800 flex items-center">
+                            <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">4</span>
+                            Aprobación y Documentos
+                        </span>
+                        <i id="icon-step4" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="step4" class="hidden p-5 border-t border-slate-100">
+                        <p class="text-sm text-slate-600 mb-3">Sube la acreditación oficial del centro.</p>
+                        <div class="flex items-center p-3 bg-blue-50 text-blue-800 rounded-lg text-sm">
+                            <i class="fa-regular fa-clock mr-2"></i>
+                            <span>Tiempo de espera: <strong>3 a 14 días</strong>. Recibirás un email de confirmación.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button onclick="toggleStep('step5')" class="w-full text-left p-5 focus:outline-none flex justify-between items-center bg-slate-50 hover:bg-white transition">
+                        <span class="font-bold text-slate-800 flex items-center">
+                            <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">5</span>
+                            Configuración Final
+                        </span>
+                        <i id="icon-step5" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="step5" class="hidden p-5 border-t border-slate-100">
+                        <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
+                            <li><strong>Usuarios:</strong> Añade profesores y alumnos (puedes subir un CSV por lotes).</li>
+                            <li><strong>Activar Apps:</strong> En Consola > Apps > Google Workspace, asegúrate de activar Classroom, Drive y Gmail.</li>
+                            <li><strong>Gemini:</strong> Se activa automáticamente en el panel lateral si tienes la edición Fundamentals aprobada.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SECTION 3: GEMINI & USO -->
+        <div id="content-gemini" class="content-section hidden">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-2">Cómo acceder</h3>
+                    <p class="text-sm text-slate-600">
+                        Profesores y alumnos inician sesión con su cuenta institucional 
+                        <span class="bg-slate-100 px-1 py-0.5 rounded font-mono text-xs">@tu-dominio.edu.es</span> en 
+                        <a href="https://gemini.google.com" target="_blank" class="text-blue-600 hover:underline">gemini.google.com</a> o desde el panel lateral de Docs/Gmail.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-2">Privacidad y Seguridad</h3>
+                    <p class="text-sm text-slate-600">
+                        A diferencia de las versiones públicas, tus datos <strong>no se usan para entrenar a la IA</strong>. Entorno seguro y conforme al RGPD para educación.
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="font-bold text-slate-900 mb-4">¿Qué puedes hacer en FP?</h3>
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden divide-y divide-slate-100">
+                <div class="p-4 hover:bg-slate-50 flex items-start gap-3">
+                    <i class="fa-solid fa-wand-magic-sparkles text-purple-500 mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-sm">Generación de Material</h4>
+                        <p class="text-xs text-slate-500">Crea planes de lecciones, rúbricas de evaluación y escenarios prácticos en segundos.</p>
+                    </div>
+                </div>
+                <div class="p-4 hover:bg-slate-50 flex items-start gap-3">
+                    <i class="fa-solid fa-image text-purple-500 mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-sm">Contenido Visual</h4>
+                        <p class="text-xs text-slate-500">Genera imágenes para presentaciones o esquemas técnicos únicos.</p>
+                    </div>
+                </div>
+                <div class="p-4 hover:bg-slate-50 flex items-start gap-3">
+                    <i class="fa-solid fa-file-pen text-purple-500 mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-sm">Corrección y Resumen</h4>
+                        <p class="text-xs text-slate-500">Ayuda a los alumnos a resumir textos complejos o corregir la gramática de sus informes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="mt-8 overflow-hidden rounded-xl border border-slate-200">
+                <table class="min-w-full divide-y divide-slate-200">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Edición</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Coste</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Gemini</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-slate-200">
+                        <tr class="bg-green-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-700">Fundamentals (Recomendada)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">Gratis</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">Sí (Ilimitado)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Standard / Plus</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">De Pago</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">Avanzado + Premium</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Sticky Progress/Footer -->
+    <footer class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 p-4 shadow-lg z-40">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex flex-col w-full mr-4">
+                <div class="flex justify-between text-xs font-semibold text-slate-500 mb-1">
+                    <span>Progreso de Requisitos</span>
+                    <span id="progress-text">0/3</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2.5">
+                    <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+            <a href="https://support.google.com/a" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm whitespace-nowrap font-semibold">
+                ¿Ayuda?
+            </a>
+        </div>
+    </footer>
+    <div class="h-16"></div> <!-- Spacer for footer -->
+
+    <script>
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all content
+            document.querySelectorAll('.content-section').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('slide-in');
+            });
+            
+            // Show selected content
+            const selectedContent = document.getElementById('content-' + tabId);
+            selectedContent.classList.remove('hidden');
+            // Trigger reflow for animation
+            void selectedContent.offsetWidth; 
+            selectedContent.classList.add('slide-in');
+
+            // Reset buttons styling
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-blue-700', 'shadow');
+                btn.classList.add('text-slate-600', 'hover:bg-white/50');
+            });
+
+            // Highlight active button
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.remove('text-slate-600', 'hover:bg-white/50');
+            activeBtn.classList.add('bg-white', 'text-blue-700', 'shadow');
+        }
+
+        // Accordion Logic
+        function toggleStep(stepId) {
+            const content = document.getElementById(stepId);
+            const icon = document.getElementById('icon-' + stepId);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Progress Logic
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const total = checkboxes.length;
+            let checked = 0;
+            
+            checkboxes.forEach(box => {
+                if(box.checked) {
+                    checked++;
+                    // Add style to parent
+                    box.closest('.check-container').classList.add('bg-blue-50', 'border-blue-200');
+                } else {
+                    box.closest('.check-container').classList.remove('bg-blue-50', 'border-blue-200');
+                }
+            });
+
+            const percentage = (checked / total) * 100;
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('progress-text').innerText = checked + '/' + total;
+
+            if(checked === total) {
+                document.getElementById('progress-bar').classList.remove('bg-blue-600');
+                document.getElementById('progress-bar').classList.add('bg-green-500');
+            } else {
+                document.getElementById('progress-bar').classList.add('bg-blue-600');
+                document.getElementById('progress-bar').classList.remove('bg-green-500');
+            }
+        }
+    </script>
+</body>
+</html>
